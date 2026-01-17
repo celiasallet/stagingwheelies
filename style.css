@@ -39,3 +39,8 @@ button {
   white-space: nowrap;
   border: 0;
 }
+
+.footer a {
+  display: inline-flex;
+  padding: 12px;
+}
