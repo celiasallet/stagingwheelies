@@ -28,32 +28,64 @@
       </p>
     </section>
 
+   
     <section class="form-section" aria-labelledby="titre-inscription">
-      <h2 id="titre-inscription">S’inscrire à l’association</h2>
+  <h2 id="titre-inscription">S’inscrire à l’association</h2>
 
-      <form action="URL_DE_TON_GOOGLE_FORM" method="POST" target="_blank">
+  <form id="asso-form">
+    <div class="form-group">
+      <label for="prenom">Prénom</label>
+      <input id="prenom" type="text" name="entry.276605977" required>
+    </div>
 
-        <div class="form-group">
-          <label for="prenom">Prénom</label>
-          <input id="prenom" type="text" name="entry.XXXXXXX" required>
-        </div>
+    <div class="form-group">
+      <label for="nom">Nom</label>
+      <input id="nom" type="text" name="entry.696105728" required>
+    </div>
 
-        <div class="form-group">
-          <label for="nom">Nom</label>
-          <input id="nom" type="text" name="entry.XXXXXXX" required>
-        </div>
+    <div class="form-group">
+      <label for="email">Adresse email</label>
+      <input id="email" type="email" name="entry.208143804" required>
+    </div>
 
-        <div class="form-group">
-          <label for="email">Adresse email</label>
-          <input id="email" type="email" name="entry.XXXXXXX" required>
-        </div>
+    <button type="submit">S’inscrire à l’association</button>
+  </form>
 
-        <button type="submit">
-          S’inscrire à l’association
-        </button>
+  <p id="confirmation" style="display:none; margin-top:1rem; font-weight:bold;">
+    C’est noté, à très vite !
+  </p>
+</section>
 
-      </form>
-    </section>
+<script>
+  const form = document.getElementById('asso-form');
+  const confirmation = document.getElementById('confirmation');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault(); // empêche l'envoi classique
+
+    // Prépare les données
+    const data = new FormData(form);
+
+    // Envoie vers Google Forms
+    fetch('https://docs.google.com/forms/d/e/1FAIpQLSed-68TBMO03Rk4AoThTfBckTWN_LHxQhUgEeev1HKVpgPuwQ/formResponse', {
+      method: 'POST',
+      mode: 'no-cors',
+      body: data
+    })
+    .then(() => {
+      // Affiche le message de confirmation
+      form.style.display = 'none';
+      confirmation.style.display = 'block';
+    })
+    .catch((err) => {
+      console.error('Erreur lors de l’envoi', err);
+      confirmation.textContent = "Oups, une erreur est survenue. Réessayez !";
+      confirmation.style.display = 'block';
+    });
+  });
+</script>
+
+
 
   </main>
 
