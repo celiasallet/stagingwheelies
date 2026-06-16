@@ -1,118 +1,152 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Association – One Pager</title>
+  <title>The Wheelies Project</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
 </head>
+
 <body>
 
-  <header class="hero">
+  <!-- Skip link accessibilité clavier -->
+  <a class="sr-only" href="#main">Aller au contenu principal</a>
+
+  <header class="hero" role="banner">
+
+    <h1 class="sr-only">Wheelies Project – Association</h1>
+
     <video
-        class="hero-video"
-        autoplay
-        muted
-        loop
-        playsinline
+      class="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      aria-hidden="true"
     >
-        <source src="video.mp4" type="video/mp4">
-        Votre navigateur ne supporte pas la vidéo.
+      <source src="hero.mp4" type="video/mp4">
+      Votre navigateur ne supporte pas la vidéo.
     </video>
 
-    <div class="hero-overlay"></div>
+    <div class="logo" aria-hidden="true"><img src="logo.png" alt=""></div>
 
-   
-</header>
+  </header>
 
-  <main>
+  <main id="main" role="main">
 
-    <section class="hero" aria-labelledby="titre-asso">
-      <h1 id="titre-asso" class="sr-only">
-        Nom de l’association
-      </h1>
-      <!-- <img src="illu.png" alt="Photo représentant les actions de l’association"> -->
-    </section>
+    <div class="content-layout">
 
-    <section class="intro">
-      <p>
-       Wheelies brings creativity and experimentation to every project. <br> We design and co-create workshops, events, and products, and we offer consultancy on disability and accessibility.
-      </p>
-    </section>
+      <div class="content-main">
 
-   
-    <section class="form-section" aria-labelledby="titre-inscription">
-  <h2 id="titre-inscription">S’inscrire à l’association</h2>
+        <section class="intro" aria-labelledby="intro-title">
 
-  <form id="asso-form">
-    <div class="form-group">
-      <label for="prenom">Prénom</label>
-      <input id="prenom" type="text" name="entry.276605977" required>
+          <h2 id="intro-title" class="sr-only">Présentation</h2>
+
+          <p>
+            Wheelies brings creativity and experimentation to every project.
+            We design and co-create workshops, events, and products, and we
+            offer consultancy on disability and accessibility.
+          </p>
+
+        </section>
+
+        <section class="form-section" aria-labelledby="form-title">
+
+        <h2 id="form-title">Join the Wheelies community to stay updated</h2>
+        <h3 id="thanks-title" hidden>
+          Thanks for joining! We’ll keep you updated on our upcoming events and activities.
+        </h3>
+
+          <form
+            id="asso-form"
+          >
+            <p id="form-help" class="sr-only">
+              Formulaire d’inscription à l’association Wheelies Project.
+              Tous les champs sont obligatoires.
+            </p>
+
+            <div class="form-group">
+              <label for="prenom">Name</label>
+              <input id="prenom" type="text" name="entry.696105728" required autocomplete="given-name">
+            </div>
+
+            <div class="form-group">
+              <label for="nom">Surname</label>
+              <input id="nom" type="text" name="entry.276605977" required autocomplete="family-name">
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input id="email" type="email" name="entry.208143804" required autocomplete="email">
+            </div>
+
+            <button type="submit">
+              Subscribe
+            </button>
+
+          </form>
+           
+        </section>
+      </div>
     </div>
+      <script>
+      document.getElementById("asso-form").addEventListener("submit", async function (e) {
+        e.preventDefault();
 
-    <div class="form-group">
-      <label for="nom">Nom</label>
-      <input id="nom" type="text" name="entry.696105728" required>
-    </div>
+        const form = e.target;
 
-    <div class="form-group">
-      <label for="email">Adresse email</label>
-      <input id="email" type="email" name="entry.208143804" required>
-    </div>
+        await fetch("https://docs.google.com/forms/d/e/1FAIpQLSed-68TBMO03Rk4AoThTfBckTWN_LHxQhUgEeev1HKVpgPuwQ/formResponse", {
+          method: "POST",
+          body: new FormData(form),
+          mode: "no-cors"
+        });
 
-    <button type="submit">S’inscrire à l’association</button>
-  </form>
+        // cacher form
+        form.style.display = "none";
 
-  <p id="confirmation" style="display:none; margin-top:1rem; font-weight:bold;">
-    C’est noté, à très vite !
-  </p>
-</section>
-
-<script>
-  const form = document.getElementById('asso-form');
-  const confirmation = document.getElementById('confirmation');
-
-  form.addEventListener('submit', function(e) {
-    e.preventDefault(); // empêche l'envoi classique
-
-    // Prépare les données
-    const data = new FormData(form);
-
-    // Envoie vers Google Forms
-    fetch('https://docs.google.com/forms/d/e/1FAIpQLSed-68TBMO03Rk4AoThTfBckTWN_LHxQhUgEeev1HKVpgPuwQ/formResponse', {
-      method: 'POST',
-      mode: 'no-cors',
-      body: data
-    })
-    .then(() => {
-      // Affiche le message de confirmation
-      form.style.display = 'none';
-      confirmation.style.display = 'block';
-    })
-    .catch((err) => {
-      console.error('Erreur lors de l’envoi', err);
-      confirmation.textContent = "Oups, une erreur est survenue. Réessayez !";
-      confirmation.style.display = 'block';
-    });
-  });
-</script>
-
-
-
+        // swap titre
+        document.getElementById("form-title").hidden = true;
+        document.getElementById("thanks-title").hidden = false;
+      });
+    </script>
   </main>
 
-<footer class="footer">
-    <a class="mail" href="mailto:contact@asso.fr"
-        aria-label="Envoyer un email à l’association">
-        <img src="mail.svg" alt="" role="presentation">
+  <footer class="footer" role="contentinfo">
+
+    <a
+      class="map-card"
+      href="https://maps.google.com/?q=Rue+Émile+Féron+153,+1060+Saint-Gilles,+Belgique"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Ouvrir l’adresse dans Google Maps : Rue Émile Féron 153, 1060 Saint-Gilles"
+    >
+      <span class="map-card__address">
+        Rue Émile Féron 153, 1060 Saint-Gilles
+      </span>
     </a>
-    <a class="insta" href="https://www.instagram.com/thewheeliesproject/"
+
+    <div class="footer-icons" aria-label="Liens réseaux sociaux">
+
+      <a class="icon-btn mail" href="mailto:thewheeliesproject@gmail.com" aria-label="Envoyer un email">
+        <img src="mail.svg" alt="">
+      </a>
+
+      <a class="icon-btn insta" href="https://www.instagram.com/thewheeliesproject/"
         target="_blank"
-        rel="noopener"
-        aria-label="Compte Instagram de l’association">
-        <img src="insta.svg" alt="" role="presentation">
-    </a>
-</footer>
+        rel="noopener noreferrer"
+        aria-label="Ouvrir Instagram de Wheelies Project">
+        <img src="insta.svg" alt="">
+      </a>
+
+    </div>
+
+  </footer>
 
 </body>
+
 </html>
