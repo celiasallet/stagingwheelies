@@ -36,7 +36,7 @@ p {
 
 .hero {
   position: relative;
-  height: 50vh;
+  height: 70vh;
   overflow: hidden;
 }
 
@@ -52,7 +52,23 @@ p {
   position: absolute;
   inset: 0;
 }
+.hero-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
+  height: 70vh;
+
+  background: linear-gradient(
+  to top,
+  rgba(251, 251, 252, 1) 0%,
+  transparent 50%,
+  transparent 100%
+);
+
+  pointer-events: none;
+}
 .logo img {
   mix-blend-mode: multiply;
   margin: 1rem;
