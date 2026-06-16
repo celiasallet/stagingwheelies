@@ -48,10 +48,6 @@ p {
   object-fit: cover;
 }
 
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-}
 
 .logo img {
   mix-blend-mode: multiply;
@@ -262,7 +258,6 @@ input:focus-visible {
     grid-template-columns: 32rem 1fr;
     gap: 6rem;
     align-items: start;
-    
     margin: auto;
   }
 
